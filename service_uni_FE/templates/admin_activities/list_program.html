@@ -1,0 +1,104 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Program List {% endblock %}
+
+{% block stylesheets %}
+
+    <!-- data tables css -->
+    <link rel="stylesheet" href="/static/assets/plugins/data-tables/css/datatables.min.css">
+
+{% endblock stylesheets %}
+
+{% block content %}
+
+    <!-- [ Main Content ] start -->
+    <section class="pcoded-main-container">
+        <div class="pcoded-wrapper">
+            <div class="pcoded-content">
+                <div class="pcoded-inner-content">
+                    <!-- [ breadcrumb ] start -->
+                    <div class="page-header">
+                        <div class="page-block">
+                            <div class="row align-items-center">
+                                <div class="col-md-12">
+                                    <div class="page-header-title">
+                                        <h5 class="m-b-10">Programs</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- [ breadcrumb ] end -->
+                    <div class="main-body">
+                        <div class="page-wrapper">
+                            <!-- [ Main Content ] start -->
+                            <div class="row">
+                                <!-- [ configuration table ] start -->
+                                {% if messages %}
+                                    {% for message in messages %}
+                                        <button class="btn btn-block notifications btn-{{message.tags}}" data-type="{{message.tags}}" data-from="bottom" data-align="right">
+                                            {{ message | safe }}
+                                        </button>
+                                    {% endfor %}
+                                {% endif %}
+                                <div class="col-sm-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5>Program Record</h5>
+                                        </div>
+                                        <div class="card-block">
+                                            <div class="table-responsive">
+                                                <table id="zero-configuration" class="display table nowrap table-striped table-hover" style="width:100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>S/N</th>
+                                                            <th>Name</th>
+                                                            <th>Program code</th>
+                                                            <th>Faculty</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {% for item in programs %}
+                                                            <tr>
+                                                                <td>{{forloop.counter}}</td>
+                                                                <td>{{item.name}}</td>
+                                                                <td>{{item.code}}</td>
+                                                                <td>{{item.faculty}}</td>
+                                                            </tr>
+                                                        {% endfor %}
+                                                    </tbody>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <tr>
+                                                            <th>S/N</th>
+                                                            <th>Name</th>
+                                                            <th>Program code</th>
+                                                            <th>Faculty</th>
+                                                        </tr>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- [ configuration table ] end -->
+                            </div>
+                            <!-- [ Main Content ] end -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- [ Main Content ] end -->
+
+{% endblock content %}
+
+{% block javascripts %}
+
+    <!-- datatable Js -->
+    <script src="/static/assets/plugins/data-tables/js/datatables.min.js"></script>
+    <script src="/static/assets/js/pages/tbl-datatable-custom.js"></script>
+
+{% endblock javascripts %}

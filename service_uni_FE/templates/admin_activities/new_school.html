@@ -1,0 +1,71 @@
+{% extends "layouts/base.html" %}
+{% load widget_tweaks %}
+{% block title %} Create Account {% endblock %}
+
+{% block stylesheets %}
+
+<!-- Specific CSS goes HERE -->
+
+{% endblock stylesheets %}
+
+{% block content %}
+
+    <!-- [ Main Content ] start -->
+    <div class="pcoded-main-container">
+        <div class="pcoded-wrapper">
+            <div class="pcoded-content">
+                <div class="pcoded-inner-content">
+                    <div class="main-body">
+                        <div class="page-wrapper">
+                            <!-- [ Main Content ] start -->
+                            <div class="row">
+                                {% if messages %}
+                                    {% for message in messages %}
+                                        <button class="btn btn-block notifications btn-{{message.tags}}" data-type="{{message.tags}}" data-from="bottom" data-align="right">
+                                            {{ message | safe }}
+                                        </button>
+                                    {% endfor %}
+                                {% endif %}
+                                <div class="col-sm-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5>Account Registration</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <h5 class="mt-1">Create New School / Faculty</h5>
+                                            <hr>
+                                            <form action="" method="post">
+                                                {% csrf_token %}
+                                                <div class="form-row">
+                                                    <div class="form-group col-md-6">
+                                                        <label for="email">Institution</label>
+                                                        {% render_field school_form.institution class="form-control mb-3" id="institution" %}
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <label for="user_type">Name</label>
+                                                        {% render_field school_form.name class="form-control mb-3" placeholder="Faculty name" id="user_type" %}
+                                                    </div>
+                                                </div>
+                                                <button type="submit" class="btn btn-primary">Submit</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- [ form-element ] end -->
+                            </div>
+                            <!-- [ Main Content ] end -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- [ Main Content ] end -->
+
+{% endblock content %}
+
+{% block javascripts %}
+
+<!-- Specific Page JS goes HERE  -->
+
+{% endblock javascripts %}

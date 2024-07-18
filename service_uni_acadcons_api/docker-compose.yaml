@@ -1,0 +1,44 @@
+version: "3.9"
+services:
+  service_uni_acadcons_db:
+    image: postgres:12
+    container_name: "service_uni_acadcons_db"
+    ports:
+      - "5434:5432"
+    restart: always
+    environment:
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+    networks:
+      - service-uni-network
+
+  service_uni_acadcons_pgadmin:
+    image: dpage/pgadmin4
+    container_name: service_uni_acadcons_pgadmin
+    depends_on:
+      - service_uni_acadcons_db
+    ports:
+      - "5053:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+    networks:
+      - service-uni-network
+    restart: always
+
+  service_uni_acadcons_api:
+    container_name: "service_uni_acadcons_api"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - "service_uni_acadcons_db"
+    ports:
+      - "8006:8006"
+    restart: always
+    networks:
+      - service-uni-network
+
+networks:
+  service-uni-network:
+    external: true

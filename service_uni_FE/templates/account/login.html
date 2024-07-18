@@ -1,0 +1,60 @@
+{% extends "layouts/base-fullscreen.html" %}
+{% load widget_tweaks %}
+{% block title %} Login {% endblock %}
+
+{% block content %}   
+
+    <div class="auth-wrapper">
+        <div class="auth-content">
+            <div class="auth-bg">
+                <span class="r"></span>
+                <span class="r s"></span>
+                <span class="r s"></span>
+                <span class="r"></span>
+            </div>
+            <div class="card">
+                <div class="card-body text-center">
+                    <div class="mb-4">
+                        <i class="feather icon-unlock auth-icon"></i>
+                    </div>
+                    <h3 class="mb-4">Login</h3>
+
+                    <span class="mb-0 text-muted">
+                        {% if messages %}
+                            {% for message in messages %}
+                                <button class="btn btn-block notifications btn-{{message.tags}}" data-type="{{message.tags}}" data-from="bottom" data-align="right">
+                                    {{ message | safe }}
+                                </button>
+                            {% endfor %}
+                        {% else %}
+                            Add your credentials
+                        {% endif %}
+                    </span>
+
+                    <br />
+                    <br />
+
+                    <form role="form" method="post" action="">
+
+                        {% csrf_token %}                    
+
+                        <div class="input-group mb-3">
+                            {% render_field login_form.email class="form-control mb-3" placeholder="Email" id="email" %}
+                        </div>
+                        
+                        <div class="input-group mb-4">
+                            {% render_field login_form.password class="form-control mb-3" placeholder="Password" id="password" %}
+                        </div>
+                        <button type="submit" name="login" class="btn btn-primary shadow-2 mb-4">Login</button>
+
+                    </form>
+
+                    <p class="mb-0 text-muted">Not a Student? Apply for Admission<a href="{% url 'account:apply_admission' %}"> Apply</a></p>
+                    <br />
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

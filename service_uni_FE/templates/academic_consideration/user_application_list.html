@@ -1,0 +1,117 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Enrollment List {% endblock %}
+
+{% block stylesheets %}
+
+    <!-- data tables css -->
+    <link rel="stylesheet" href="/static/assets/plugins/data-tables/css/datatables.min.css">
+    <link rel="stylesheet" href="/static/assets/css/pages/academic_consideration.css">
+
+{% endblock stylesheets %}
+
+{% block content %}
+
+    <!-- [ Main Content ] start -->
+    <section class="pcoded-main-container">
+        <div class="pcoded-wrapper">
+            <div class="pcoded-content">
+                <div class="pcoded-inner-content">
+                    <!-- [ breadcrumb ] start -->
+                    <div class="page-header">
+                        <div class="page-block">
+                            <div class="row align-items-center">
+                                <div class="col-md-12">
+                                    <div class="page-header-title">
+                                        <h5 class="m-b-10">Academic Consideration</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- [ breadcrumb ] end -->
+                    <div class="main-body">
+                        <div class="page-wrapper">
+                            <!-- [ Main Content ] start -->
+                            <div class="row">
+                                <!-- [ configuration table ] start -->
+                                <div class="col-sm-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5>Academic Consideration Applications</h5>
+                                        </div>
+                                        <div class="card-block">
+                                            <div class="table-responsive">
+                                                <table id="zero-configuration" class="display table nowrap table-striped table-hover" style="width:100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>ID</th>
+                                                            <th>Subject Code</th>
+                                                            <th>Assessment Item Affected</th>
+                                                            <th>Assessment Type</th>
+                                                            <th>Due/Scheduled Date</th>
+                                                            <th>Subject Coordinator(s)</th>
+                                                            <th>Nature of Assistance</th>
+                                                            <th>Status</th>
+                                                            <th>Actions</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {% for item in list_applications %}
+                                                            <tr>
+                                                                <td>{{item.ac_id}}</td>
+                                                                <td>{{item.code}}</td>
+                                                                <td>{{item.assessment_item_affected}}</td>
+                                                                <td>{{item.assessment_type}}</td>
+                                                                <td>{{item.due_date}}</td>
+                                                                <td>{{item.subject_coordinator}}</td>
+                                                                <td>{{item.nature_of_assistance}}</td>
+                                                                <td>{{item.status}}</td>
+                                                                <td>
+                                                                    <a href="{% url 'academic_consideration:show_details' item.ac_id %}">
+                                                                        <button class="btn btn-primary">Show Details</button>
+                                                                    </a>
+                                                                </td>
+                                                            </tr>
+                                                        {% endfor %}
+                                                    </tbody>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <th>ID</th>
+                                                            <th>Subject Code</th>
+                                                            <th>Assessment Item Affected</th>
+                                                            <th>Assessment Type</th>
+                                                            <th>Due/Scheduled Date</th>
+                                                            <th>Subject Coordinator(s)</th>
+                                                            <th>Nature of Assistance</th>
+                                                            <th>Status</th>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- [ configuration table ] end -->
+                                </div>
+                                <!-- [ Columns Reorder ] end -->
+                            </div>
+                            <!-- [ Main Content ] end -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- [ Main Content ] end -->
+
+{% endblock content %}
+
+{% block javascripts %}
+
+    <!-- datatable Js -->
+    <script src="/static/assets/plugins/data-tables/js/datatables.min.js"></script>
+    <script src="/static/assets/js/pages/tbl-datatable-custom.js"></script>
+    <script src="/static/assets/js/pages/academic_consideration.js"></script>
+
+{% endblock javascripts %}

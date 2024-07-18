@@ -1,0 +1,142 @@
+{% extends "layouts/base.html" %}
+{% load widget_tweaks %}
+{% block title %} Create Academic Consideration {% endblock %}
+
+{% block stylesheets %}
+
+<!-- Specific CSS goes HERE -->
+
+{% endblock stylesheets %}
+
+{% block content %}
+
+    <!-- [ Main Content ] start -->
+    <div class="pcoded-main-container">
+        <div class="pcoded-wrapper">
+            <div class="pcoded-content">
+                <div class="pcoded-inner-content">
+                    <div class="main-body">
+                        <div class="page-wrapper">
+                            <!-- [ Main Content ] start -->
+                            <div class="row">
+                                {% if messages %}
+                                    {% for message in messages %}
+                                        <button class="btn btn-block notifications btn-{{message.tags}}" data-type="{{message.tags}}" data-from="bottom" data-align="right">
+                                            {{ message | safe }}
+                                        </button>
+                                    {% endfor %}
+                                {% endif %}
+                                <div class="col-sm-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5>Academic Consideration</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <h5>Approve/Decline Academic Consideration Application</h5>
+                                            <hr>
+                                            <form action="{% url 'academic_consideration:update_application' %}" method="post">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="id" value="{{id}}">
+                                                <input type="hidden" name="student_id" value="{{student_id}}">
+                                                <div class="form-row">
+                                                    <div class="form-row">
+                                                        {% if status == "LEVEL1_PENDING" or status == "LEVEL2_PENDING" %}
+                                                            <div class="alert alert-warning" role="alert">
+                                                                <p>{{ status }}</p>
+                                                            </div>
+                                                        {% elif status == "REQUEST_INFO" %}
+                                                            <div class="alert alert-warning" role="alert">
+                                                                <p>{{ status }}</p>
+                                                            </div>
+                                                        {% elif status == "LEVEL1_APPROVED" or status == "LEVEL2_APPROVED" %}
+                                                            <div class="alert alert alert-success" role="alert">
+                                                                <p>{{ status }}</p>
+                                                            </div>
+                                                        {% elif status == "LEVEL1_DECLINED" or status == "LEVEL2_DECLINED" %}
+                                                            <div class="alert alert-danger col-md-4" role="alert">
+                                                                <p>{{ status }}</p>
+                                                            </div>
+                                                        {% endif %}
+                                                    </div>
+                                                    <div class="form-row">
+                                                        <div class="form-group col-md-4">
+                                                            <label for="ac_from">Date From</label>
+                                                            {% render_field update_ac_form.ac_from class="form-control mb-3" placeholder="Date From" id="ac_from" %}
+                                                        </div>
+                                                        <div class="form-group col-md-4">
+                                                            <label for="ac_to">Date To</label>
+                                                            {% render_field update_ac_form.ac_to class="form-control mb-3" placeholder="Date To" id="ac_to" %}
+                                                        </div>
+                                                        <div class="form-group col-md-4">
+                                                            <label for="subj_code">Subject</label>
+                                                            {% render_field update_ac_form.subject_id class="form-control mb-3" placeholder="Subject" id="subject_id" %}
+                                                        </div>
+                                                        <div class="form-group col-md-4">
+                                                            <label for="assessment_item_affected">Assessment Item Affected</label>
+                                                            {% render_field update_ac_form.assessment_item_affected class="form-control mb-3" placeholder="Assessment Item Affected" id="assessment_item_affected" %}
+                                                        </div>
+                                                        <div class="form-group col-md-4">
+                                                            <label for="assessment_type">Assessment type</label>
+                                                            {% render_field update_ac_form.assessment_type class="form-control mb-3" id="assessment_type" %}
+                                                        </div>
+                                                        <div class="form-group col-md-4">
+                                                            <label for="weight">Weight (%)</label>
+                                                            {% render_field update_ac_form.weight class="form-control mb-3" placeholder="Weight (%)" id="weight" %}
+                                                        </div>
+                                                        <div class="form-group col-md-4">
+                                                            <label for="group_work">Group Work</label>
+                                                            {% render_field update_ac_form.group_work class="form-control mb-3" placeholder="Group Work" id="group_work" %}
+                                                        </div>
+                                                        <div class="form-group col-md-4">
+                                                            <label for="due_date">Due/Scheduled Date</label>
+                                                            {% render_field update_ac_form.due_date class="form-control mb-3" placeholder="Due/Scheduled Date" id="due_date" %}
+                                                        </div>
+                                                        <div class="form-group col-md-4">
+                                                            <label for="subject_coordinator">Subject Coordinator</label>
+                                                            {% render_field update_ac_form.subject_coordinator class="form-control mb-3" placeholder="Subject Coordinator" id="subject_coordinator" %}
+                                                        </div>
+                                                        <div class="form-group col-md-8">
+                                                            <label for="nature_of_assistance">Nature of Assistance</label>
+                                                            {% render_field update_ac_form.nature_of_assistance class="form-control mb-3" placeholder="Nature of Assistance" id="nature_of_assistance" %}
+                                                        </div>
+                                                        <div class="form-group col-md-8">
+                                                            <label for="comment">Comment</label>
+                                                            {% render_field update_ac_form.comment class="form-control mb-3" placeholder="Comment" id="comment" %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                {% if user_type == "STAFF" %} <!--lecturer-->
+                                                    {% if status == "LEVEL1_APPROVED" %}
+                                                        <input type="submit" name="status" value="Grant" class="btn btn-success"></input>
+                                                        <input type="submit" name="status" value="Deny" class="btn btn-danger"></input>
+                                                    {% endif %}
+                                                {% else %} <!--admin/mgt-->
+                                                    {% if status == "LEVEL1_PENDING" %}
+                                                        <input type="submit" name="status" value="Approve" class="btn btn-success"></input>
+                                                        <input type="submit" name="status" value="Request Info" class="btn btn-warning"></input>
+                                                        <input type="submit" name="status" value="Reject" class="btn btn-danger"></input>
+                                                    {% endif %}
+                                                {% endif %}
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- [ form-element ] end -->
+                            </div>
+                            <!-- [ Main Content ] end -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- [ Main Content ] end -->
+
+{% endblock content %}
+
+{% block javascripts %}
+
+<!-- Specific Page JS goes HERE  -->
+
+{% endblock javascripts %}

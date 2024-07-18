@@ -1,0 +1,118 @@
+{% extends "layouts/base-fullscreen.html" %}
+{% load widget_tweaks %}
+{% block title %} Register Account {% endblock %}
+
+{% block content %}   
+
+    <div class="auth-wrapper">
+        <div class="auth-content" style="min-width: 50%;">
+            <div class="auth-bg">
+                <span class="r"></span>
+                <span class="r s"></span>
+                <span class="r s"></span>
+                <span class="r"></span>
+            </div>
+            <div class="card">
+                <div class="card-body text-center">
+                    <div class="mb-4">
+                        <i class="feather icon-user-plus auth-icon"></i>
+                    </div>
+                    <h3 class="mb-4">Service Uni - Register Account</h3>
+
+                    <span class="mb-0 text-muted">
+                        {% if messages %}
+                            {% for message in messages %}
+                                <button class="btn btn-block notifications btn-{{message.tags}}" data-type="{{message.tags}}" data-from="bottom" data-align="right">
+                                    {{ message | safe }}
+                                </button>
+                            {% endfor %}
+                        {% endif %}
+                    </span>
+
+                    <br />
+                    <br />
+
+                    <form role="form" method="post" action="">
+
+                        {% csrf_token %}
+                        <div class="form-row" style="text-align: left">
+                            <div class="form-group col-md-4">
+                                <label for="program">First name</label>
+                                {% render_field register_form.first_name class="form-control mb-3" placeholder="First name" id="first_name" %}
+
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <label for="program">Middle name</label>
+                                {% render_field register_form.middle_name class="form-control mb-3" placeholder="Middle name" id="middle_name" %}
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <label for="program">Last name</label>
+                                {% render_field register_form.last_name class="form-control mb-3" placeholder="Last name" id="last_name" %}
+                            </div>
+                        </div>
+
+                        <div class="form-row" style="text-align: left">
+                            <div class="form-group col-md-6">
+                                <label for="email">Email</label>
+                                {% render_field register_form.email class="form-control mb-3" placeholder="Email" id="email" %}
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="password">Password</label>
+                                {% render_field register_form.password class="form-control mb-3" placeholder="Password" id="password" %}
+                            </div>
+                        </div>
+
+                        <div class="form-row" style="text-align: left">
+                            <div class="form-group col-md-12">
+                                <label for="email">Institution name</label>
+                                {% render_field register_form.institution_name class="form-control mb-3" placeholder="Institution name" id="institution_name" %}
+                            </div>
+                        </div>
+
+                        <div class="form-row" style="text-align: left">
+                            <div class="form-group col-md-12">
+                                <label for="website">Website</label>
+                                {% render_field register_form.website class="form-control mb-3" placeholder="Website" id="website" %}
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <label for="email_domain">Email domain</label>
+                                {% render_field register_form.email_domain class="form-control mb-3" placeholder="Email domain" id="email_domain" %}
+                            </div>
+                        </div>
+
+                        <div class="form-row" style="text-align: left">
+                            <div class="form-group col-md-6">
+                                <label for="street_address">Address</label>
+                                {% render_field register_form.street_address class="form-control mb-3" id="street_address" %}
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="city">City</label>
+                                {% render_field register_form.city placeholder="City" class="form-control mb-3" id="city" %}
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <label for="state">State</label>
+                                {% render_field register_form.state class="form-control mb-3" placeholder="State" id="state" %}
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <label for="country">Country</label>
+                                {% render_field register_form.country class="form-control mb-3" placeholder="Country" id="country" %}
+                            </div>
+                        </div>
+
+                        <button type="submit" name="register" class="btn btn-primary shadow-2 mb-4">Create Account</button>
+
+                    </form>
+
+                    <p class="mb-0 text-muted">Already have an account? <a href="{% url 'account:login' %}" >Login</a></p>
+                    <br />
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

@@ -1,0 +1,7 @@
+DATABASE_NAME=service_uni
+DATABASE_USER=postgres
+DATABASE_PASSWORD=Oluteofute1.
+DATABASE_HOST=service_uni_user_db
+DATABASE_PORT=5432
+PGADMIN_DEFAULT_EMAIL=admin@service-uni.com
+PGADMIN_DEFAULT_PASSWORD=Oluteofute1.

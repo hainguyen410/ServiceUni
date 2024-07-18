@@ -1,0 +1,200 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Enrollment List {% endblock %}
+
+{% block stylesheets %}
+
+    <!-- data tables css -->
+    <link rel="stylesheet" href="/static/assets/plugins/data-tables/css/datatables.min.css">
+
+{% endblock stylesheets %}
+
+{% block content %}
+
+    <!-- [ Main Content ] start -->
+    <section class="pcoded-main-container">
+        <div class="pcoded-wrapper">
+            <div class="pcoded-content">
+                <div class="pcoded-inner-content">
+                    <!-- [ breadcrumb ] start -->
+                    <div class="page-header">
+                        <div class="page-block">
+                            <div class="row align-items-center">
+                                <div class="col-md-12">
+                                    <div class="page-header-title">
+                                        <h5 class="m-b-10">Enrollment</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- [ breadcrumb ] end -->
+                    <div class="main-body">
+                        <div class="page-wrapper">
+                            <!-- [ Main Content ] start -->
+                            <div class="row">
+                                <!-- [ configuration table ] start -->
+                                {% if messages %}
+                                    {% for message in messages %}
+                                        <button class="btn btn-block notifications btn-{{message.tags}}" data-type="{{message.tags}}" data-from="bottom" data-align="right">
+                                            {{ message | safe }}
+                                        </button>
+                                    {% endfor %}
+                                {% endif %}
+
+                                {% if user_type == "ADMIN" %}
+                                <div class="col-sm-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5>Session Enrollment Record</h5>
+                                        </div>
+                                        <div class="card-block">
+                                            <div class="table-responsive">
+                                                <table id="zero-configuration" class="display table nowrap table-striped table-hover" style="width:100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>S/N</th>
+                                                            <th>U Id</th>
+                                                            <th>First name</th>
+                                                            <th>Middle name</th>
+                                                            <th>Last name</th>
+                                                            <th>Program</th>
+                                                            <th>Level</th>
+                                                            <th>Payment Status</th>
+                                                            <th>Enrolled Date</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {% for item in session_enrollment %}
+                                                            <tr>
+                                                                <td>{{forloop.counter}}</td>
+                                                                <td>{{item.u_id}}</td>
+                                                                <td>{{item.first_name}}</td>
+                                                                <td>{{item.middle_name}}</td>
+                                                                <td>{{item.last_name}}</td>
+                                                                <td>{{item.name}}</td>
+                                                                <td>{{item.current_level}}</td>
+                                                                <td>{{item.fee_paid}}</td>
+                                                                <td></td>
+                                                            </tr>
+                                                        {% endfor %}
+                                                    </tbody>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <th>S/N</th>
+                                                            <th>U Id</th>
+                                                            <th>First name</th>
+                                                            <th>Middle name</th>
+                                                            <th>Last name</th>
+                                                            <th>Program</th>
+                                                            <th>Level</th>
+                                                            <th>Payment Status</th>
+                                                            <th>Enrolled Date</th>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                <!-- [ configuration table ] end -->
+
+                                <!-- [ Columns Reorder ] start -->
+                                <div class="col-sm-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5>Subject Enrollment Record</h5>
+                                        </div>
+                                        <div class="card-block">
+                                            <div class="table-responsive">
+                                                <table id="col-reorder" class="display table nowrap table-striped table-hover" style="width:100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>S/N</th>
+                                                            {% if user_type == "STAFF" or user_type == "ADMIN" %}
+                                                                <th>U Id</th>
+                                                            {% endif %}
+                                                            <th>First name</th>
+                                                            <th>Middle name</th>
+                                                            <th>Last name</th>
+                                                            <th>Subject name</th>
+                                                            <th>Subject code</th>
+                                                            <th>Status</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {% for item in subject_enrolled %}
+                                                            <tr>
+                                                                <td>{{forloop.counter}}</td>
+                                                                {% if user_type == "STAFF" or user_type == "ADMIN" %}
+                                                                    <td>{{item.u_id}}</td>
+                                                                {% endif %}
+                                                                <td>{{item.first_name}}</td>
+                                                                <td>{{item.middle_name}}</td>
+                                                                <td>{{item.last_name}}</td>
+                                                                <td>{{item.name}}</td>
+                                                                <td>{{item.code}}</td>
+                                                                <td>{{item.enrollment_status}}</td>
+                                                                <td>
+                                                                    {% if user_type == "STUDENT" %}
+                                                                        {% if item.enrollment_status == "active" %}
+                                                                            <form action="" method="post">
+                                                                                {% csrf_token %}
+                                                                                <input type="hidden" name="subject_id" value="{{item.subject_id}}">
+                                                                                <button name="withdraw" value="{{item.id}}" class="btn btn-sm btn-warning">withdraw</button>
+                                                                            </form>
+                                                                        {% else %}
+                                                                            <form action="" method="post">
+                                                                                {% csrf_token %}
+                                                                                <input type="hidden" name="enrollment_id" value="{{item.id}}">
+                                                                                <input type="hidden" name="subject_id" value="{{item.subject_id}}">
+                                                                                <button name="enroll" class="btn btn-sm btn-success">enroll</button>
+                                                                            </form>
+                                                                        {% endif %}
+                                                                    {% endif %}
+                                                                </td>
+                                                            </tr>
+                                                        {% endfor %}
+                                                    </tbody>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <th>S/N</th>
+                                                            {% if user_type == "STAFF" or user_type == "ADMIN" %}
+                                                                <th>U Id</th>
+                                                            {% endif %}
+                                                            <th>First name</th>
+                                                            <th>Middle name</th>
+                                                            <th>Last name</th>
+                                                            <th>Subject name</th>
+                                                            <th>Subject code</th>
+                                                            <th>Status</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- [ Columns Reorder ] end -->
+                            </div>
+                            <!-- [ Main Content ] end -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- [ Main Content ] end -->
+
+{% endblock content %}
+
+{% block javascripts %}
+
+    <!-- datatable Js -->
+    <script src="/static/assets/plugins/data-tables/js/datatables.min.js"></script>
+    <script src="/static/assets/js/pages/tbl-datatable-custom.js"></script>
+
+{% endblock javascripts %}

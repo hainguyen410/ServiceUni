@@ -1,0 +1,16 @@
+version: "3.9"
+services:
+  service_uni_fe:
+    container_name: "service_uni_fe"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8005:8005"
+    restart: always
+    networks:
+      - service-uni-network
+
+networks:
+  service-uni-network:
+    external: true

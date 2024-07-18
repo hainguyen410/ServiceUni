@@ -1,0 +1,112 @@
+{% extends "layouts/base-fullscreen.html" %}
+{% load widget_tweaks %}
+{% block title %} Apply for Admission {% endblock %}
+
+{% block content %}   
+
+    <div class="auth-wrapper">
+        <div class="auth-content" style="min-width: 50%;">
+            <div class="auth-bg">
+                <span class="r"></span>
+                <span class="r s"></span>
+                <span class="r s"></span>
+                <span class="r"></span>
+            </div>
+            <div class="card">
+                <div class="card-body text-center">
+                    <div class="mb-4">
+                        <i class="feather icon-user-plus auth-icon"></i>
+                    </div>
+                    <h3 class="mb-4">Service Uni - Apply for Admission</h3>
+
+                    <span class="mb-0 text-muted">
+                        {% if messages %}
+                            {% for message in messages %}
+                                <button class="btn btn-block notifications btn-{{message.tags}}" data-type="{{message.tags}}" data-from="bottom" data-align="right">
+                                    {{ message | safe }}
+                                </button>
+                            {% endfor %}
+                        {% endif %}
+                    </span>
+
+                    <br />
+                    <br />
+
+                    <form role="form" method="post" action="">
+
+                        {% csrf_token %}                    
+                        <div class="form-row" style="text-align: left">
+                            <div class="form-group col-md-4">
+                                <label for="first_name">First name</label>
+                                {% render_field admission_form.first_name class="form-control mb-3" placeholder="First name" id="first_name" %}
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <label for="middle_name">Middle name</label>
+                                {% render_field admission_form.middle_name class="form-control mb-3" placeholder="Middle name" id="middle_name" %}
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <label for="last_name">Last name</label>
+                                {% render_field admission_form.last_name class="form-control mb-3" placeholder="Last name" id="last_name" %}
+                            </div>
+                        </div>
+
+                        <div class="form-row" style="text-align: left">
+                            <div class="form-group col-md-4">
+                                <label for="first_name">Date of birth</label>
+                                {% render_field admission_form.date_of_birth type="date" class="form-control mb-3" id="date_of_birth" %}
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="gender">Gender</label>
+                                {% render_field admission_form.gender class="form-control mb-3" id="gender" %}
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <label for="phone">Phone number</label>
+                                {% render_field admission_form.contact_phone class="form-control mb-3" placeholder="Contact phone" id="contact_phone" %}
+                            </div>
+                        </div>
+
+                        <div class="form-row" style="text-align: left">
+                            <div class="form-group col-md-6">
+                                <label for="street_address">Address</label>
+                                {% render_field admission_form.street_address class="form-control mb-3" id="street_address" %}
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="city">City</label>
+                                {% render_field admission_form.city placeholder="City" class="form-control mb-3" id="city" %}
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <label for="state">State</label>
+                                {% render_field admission_form.state class="form-control mb-3" placeholder="State" id="state" %}
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <label for="country">Country</label>
+                                {% render_field admission_form.country class="form-control mb-3" placeholder="Country" id="country" %}
+                            </div>
+                        </div>
+                        <hr/>
+                        <div class="form-row" style="text-align: left">
+                            <div class="form-group col-md-6">
+                                <label for="program">Program of Choice</label>
+                                {% render_field admission_form.program_id class="form-control mb-3" id="program" %}
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="academic_session">Academic Session</label>
+                                {% render_field admission_form.academic_session class="form-control mb-3" id="academic_session" %}
+                            </div>
+                        </div>
+
+                        <button type="submit" name="register" class="btn btn-primary shadow-2 mb-4">Submit Application</button>
+
+                    </form>
+                    <br />
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

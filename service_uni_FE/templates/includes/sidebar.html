@@ -1,0 +1,89 @@
+<!--STUDENT-->
+    <nav class="pcoded-navbar">
+        <div class="navbar-wrapper">
+            <div class="navbar-brand header-logo">
+                <a target="_blank" href="https://appseed.us/admin-dashboards/django-dashboard-dattaable-pro" class="b-brand">
+                    <div class="b-bg">
+                        <i class="feather icon-trending-up"></i>
+                    </div>
+                    <span class="b-title">Service Uni</span>
+                </a>
+                <a class="mobile-menu" id="mobile-collapse" href="#!"><span></span></a>
+            </div>
+            <div class="navbar-content scroll-div">
+                <ul class="nav pcoded-inner-navbar">
+                    <li class="nav-item pcoded-menu-caption">
+                        <label></label>
+                    </li>
+                    <li data-username="Vertical Horizontal Box Layout RTL fixed static Collapse menu color icon dark" class="nav-item pcoded-hasmenu">
+                        <a href="#!" class="nav-link"><span class="pcoded-micon"><i class="feather icon-layout"></i></span><span class="pcoded-mtext">Profile</span></a>
+                        <ul class="pcoded-submenu">
+                            <li class=""><a href="{% url 'account:profile' %}">View</a></li>
+                        </ul>
+                    </li>
+                    {% if user_type == 'ADMIN' %}
+                        <li data-username="Vertical Horizontal Box Layout RTL fixed static Collapse menu color icon dark" class="nav-item pcoded-hasmenu">
+                            <a href="#!" class="nav-link"><span class="pcoded-micon"><i class="feather icon-layout"></i></span><span class="pcoded-mtext">Admin Actions</span></a>
+                            <ul class="pcoded-submenu">
+                                <li class=""><a href="{% url 'institution:list_current_student' %}">List Current Student</a></li>
+                            </ul>
+                            <ul class="pcoded-submenu">
+                                <li class=""><a href="{% url 'institution:create_school' %}">Create New School</a></li>
+                            </ul>
+                            <ul class="pcoded-submenu">
+                                <li class=""><a href="{% url 'account:create_account' %}">Create Staff Account</a></li>
+                            </ul>
+                            <ul class="pcoded-submenu">
+                                <li class=""><a href="{% url 'institution:create_program' %}">Create New Program</a></li>
+                            </ul>
+                            <ul class="pcoded-submenu">
+                                <li class=""><a href="{% url 'institution:create_subject' %}">Create New Subject</a></li>
+                            </ul>
+                            <ul class="pcoded-submenu">
+                                <li class=""><a href="{% url 'institution:list_school' %}">List School</a></li>
+                            </ul>
+                            <ul class="pcoded-submenu">
+                                <li class=""><a href="{% url 'institution:list_program' %}">List Program</a></li>
+                            </ul>
+                            <ul class="pcoded-submenu">
+                                <li class=""><a href="{% url 'institution:list_subject' %}">List Subject</a></li>
+                            </ul>
+                        </li>
+                    {% endif %}
+                    {% if user_type != "STUDENT" %}
+                        <li data-username="Vertical Horizontal Box Layout RTL fixed static Collapse menu color icon dark" class="nav-item pcoded-hasmenu">
+                            <a href="#!" class="nav-link"><span class="pcoded-micon"><i class="feather icon-layout"></i></span><span class="pcoded-mtext">Admission</span></a>
+                            <ul class="pcoded-submenu">
+                                <li class=""><a href="{% url 'account:admission_list' %}">View</a></li>
+                            </ul>
+                        </li>
+                    {% endif %}
+                    <li data-username="Vertical Horizontal Box Layout RTL fixed static Collapse menu color icon dark" class="nav-item pcoded-hasmenu">
+                        <a href="#!" class="nav-link"><span class="pcoded-micon"><i class="feather icon-layout"></i></span><span class="pcoded-mtext">Enrollment</span></a>
+                        <ul class="pcoded-submenu">
+                            {% if user_type == "STUDENT" %}
+                                <li class=""><a href="{% url 'enrollment:session_enrollment' %}">Session Enrollment</a></li>
+                                <li class=""><a href="{% url 'enrollment:subject_enrollment' %}">Subject Enrollment</a></li>
+                                <li class=""><a href="{% url 'enrollment:student_enrollment_list' %}">Subject Enrolment Record</a></li>
+                            {% else %}
+                                <li class=""><a href="{% url 'enrollment:enrollment_list' %}">View record</a></li>
+                            {% endif %}
+                        </ul>
+                    </li>
+                    <li data-username="Vertical Horizontal Box Layout RTL fixed static Collapse menu color icon dark" class="nav-item pcoded-hasmenu">
+                        <a href="#!" class="nav-link"><span class="pcoded-micon"><i class="feather icon-layout"></i></span><span class="pcoded-mtext">Academic Consideration</span></a>
+                        <ul class="pcoded-submenu">
+                            {% if user_type == "STUDENT" %}
+                                <li class=""><a href="{% url 'academic_consideration:create_user_applications' %}">Submit new request</a></li>
+                                <li class=""><a href="{% url 'academic_consideration:user_list_applications' %}">Request Record</a></li>
+                            {% elif user_type == "STAFF" %}
+                                <li class=""><a href="{% url 'academic_consideration:list_applications' %}">View request</a></li>
+                            {% else %}
+                                <li class=""><a href="{% url 'academic_consideration:list_applications' %}">View request</a></li>
+                            {% endif %}
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>

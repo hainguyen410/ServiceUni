@@ -1,0 +1,107 @@
+{% extends "layouts/base.html" %}
+{% load widget_tweaks %}
+{% block title %} Create Account {% endblock %}
+
+{% block stylesheets %}
+
+<!-- Specific CSS goes HERE -->
+
+{% endblock stylesheets %}
+
+{% block content %}
+
+    <!-- [ Main Content ] start -->
+    <div class="pcoded-main-container">
+        <div class="pcoded-wrapper">
+            <div class="pcoded-content">
+                <div class="pcoded-inner-content">
+                    <div class="main-body">
+                        <div class="page-wrapper">
+                            <!-- [ Main Content ] start -->
+                            <div class="row">
+                                {% if messages %}
+                                    {% for message in messages %}
+                                        <button class="btn btn-block notifications btn-{{message.tags}}" data-type="{{message.tags}}" data-from="bottom" data-align="right">
+                                            {{ message | safe }}
+                                        </button>
+                                    {% endfor %}
+                                {% endif %}
+                                <div class="col-sm-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5>Account Registration</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <h5 class="mt-1">Create Staff Account</h5>
+                                            <hr>
+                                            <form action="" method="post">
+                                                {% csrf_token %}
+                                                <div class="form-row">
+                                                    <div class="form-group col-md-4">
+                                                        <label for="email">Email</label>
+                                                        {% render_field account_form.email class="form-control mb-3" placeholder="Email" id="email" %}
+                                                    </div>
+                                                    <div class="form-group col-md-4">
+                                                        <label for="user_type">User type</label>
+                                                        {% render_field account_form.user_type class="form-control mb-3" id="user_type" %}
+                                                    </div>
+                                                    <div class="form-group col-md-4">
+                                                        <label for="subjects">Subjects handling</label>
+                                                        {% render_field account_form.current_course_handling class="form-control mb-3" id="subjects" %}
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-group col-md-4">
+                                                        <label for="first_name">First name</label>
+                                                        {% render_field account_form.first_name class="form-control mb-3" placeholder="First name" id="first_name" %}
+                                                    </div>
+                                                    <div class="form-group col-md-4">
+                                                        <label for="middle_name">Middle name</label>
+                                                        {% render_field account_form.middle_name class="form-control mb-3" placeholder="Middle name" id="middle_name" %}
+                                                    </div>
+                                                    <div class="form-group col-md-4">
+                                                        <label for="last_name">Last name</label>
+                                                        {% render_field account_form.last_name class="form-control mb-3" placeholder="Last name" id="last_name" %}
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-group col-md-6">
+                                                        <label for="address">Address</label>
+                                                        {% render_field account_form.street_address class="form-control mb-3" placeholder="Address" id="address" %}
+                                                    </div>
+                                                    <div class="form-group col-md-2">
+                                                        <label for="inputCity">City</label>
+                                                        {% render_field account_form.city class="form-control mb-3" placeholder="Address" id="city" %}
+                                                    </div>
+                                                    <div class="form-group col-md-2">
+                                                        <label for="inputCity">State</label>
+                                                        {% render_field account_form.state class="form-control mb-3" placeholder="State" id="state" %}
+                                                    </div>
+                                                    <div class="form-group col-md-2">
+                                                        <label for="inputCity">Country</label>
+                                                        {% render_field account_form.country class="form-control mb-3" placeholder="Country" id="country" %}
+                                                    </div>
+                                                </div>
+                                                <button type="submit" class="btn btn-primary">Create</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- [ form-element ] end -->
+                            </div>
+                            <!-- [ Main Content ] end -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- [ Main Content ] end -->
+
+{% endblock content %}
+
+{% block javascripts %}
+
+<!-- Specific Page JS goes HERE  -->
+
+{% endblock javascripts %}

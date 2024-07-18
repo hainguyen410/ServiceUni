@@ -1,0 +1,153 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Profile {% endblock %}
+
+{% block stylesheets %}
+
+    <!-- data tables css -->
+    <link rel="stylesheet" href="/static/assets/plugins/data-tables/css/datatables.min.css">
+
+{% endblock stylesheets %}
+
+{% block content %}
+
+    <!-- [ Main Content ] start -->
+    <section class="pcoded-main-container">
+        <div class="pcoded-wrapper">
+            <div class="pcoded-content">
+                <div class="pcoded-inner-content">
+                    <!-- [ breadcrumb ] start -->
+                    <div class="page-header">
+                        <div class="page-block">
+                            <div class="row align-items-center">
+                                <div class="col-md-12">
+                                    <div class="page-header-title">
+                                        <h5 class="m-b-10">Profile</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- [ breadcrumb ] end -->
+                    <div class="main-body">
+                        <div class="page-wrapper">
+                            <!-- [ Main Content ] start -->
+                            <div class="row">
+                                <!-- [ configuration table ] start -->
+                                {% if messages %}
+                                    {% for message in messages %}
+                                        <button class="btn btn-block notifications btn-{{message.tags}}" data-type="{{message.tags}}" data-from="bottom" data-align="right">
+                                            {{ message | safe }}
+                                        </button>
+                                    {% endfor %}
+                                {% endif %}
+                                <div class="col-sm-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5>
+                                                {% if user_type == "STUDENT" %}
+                                                    Student Profile
+                                                {% elif user_type == "ADMIN" %}
+                                                    Admin Profile
+                                                {% else %}
+                                                    Staff Profile
+                                                {% endif %}
+                                            </h5>
+                                        </div>
+                                        <div class="card-block">
+                                            <div class="table-responsive">
+                                                <table id="col-reorder" class="display table nowrap table-striped table-hover" style="width:100%">
+                                                    <tr>
+                                                        <td>First Name:</td>
+                                                        <td>{{user_detail.first_name}}</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>Middle Name:</td>
+                                                        <td>{{user_detail.middle_name}}</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>Last Name:</td>
+                                                        <td>{{user_detail.last_name}}</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>Email:</td>
+                                                        <td>{{user_detail.email}}</td>
+                                                    </tr>
+                                                    {% if user_type == "STUDENT" %}
+                                                        <tr>
+                                                            <td>Unique ID:</td>
+                                                            <td>{{user_detail.u_id}}</td>
+                                                        </tr>
+                                                    {% endif %}
+                                                    {% if user_type == "STUDENT" %}
+                                                        <tr>
+                                                            <td>Student Type:</td>
+                                                            <td>{{user_detail.student_type}}</td>
+                                                        </tr>
+                                                    {% endif %}
+                                                    <tr>
+                                                        <td>City:</td>
+                                                        <td>{{user_detail.city}}</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>State:</td>
+                                                        <td>{{user_detail.state}}</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>Country:</td>
+                                                        <td>{{user_detail.country}}</td>
+                                                    </tr>
+                                                    {% if user_type == "STUDENT" %}
+                                                        <tr>
+                                                            <td>Enrolled Course:</td>
+                                                            <td>
+                                                                <ol>
+                                                                    {% for item in user_detail.current_enrolled_courses %}
+                                                                        <li>{{item.subject_name}}</li>
+                                                                    {% endfor %}
+                                                                </ol>
+                                                            </td>
+                                                        </tr>
+                                                    {% endif %}
+                                                    {% if user_type == "STAFF" %}
+                                                        <tr>
+                                                            <td>Courses Handling:</td>
+                                                            <td>
+                                                                <ol>
+                                                                    {% for item in user_detail.current_course_handling %}
+                                                                        <li>{{item.subject_name}}</li>
+                                                                    {% endfor %}
+                                                                </ol>
+                                                            </td>
+                                                        </tr>
+                                                    {% endif %}
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- [ configuration table ] end -->
+                            </div>
+                            <!-- [ Main Content ] end -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- [ Main Content ] end -->
+
+{% endblock content %}
+
+{% block javascripts %}
+
+    <!-- datatable Js -->
+    <script src="/static/assets/plugins/data-tables/js/datatables.min.js"></script>
+    <script src="/static/assets/js/pages/tbl-datatable-custom.js"></script>
+
+{% endblock javascripts %}
